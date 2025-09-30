@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Cookie, User, TrendingUp, LogOut, Send, Bot, MessageCircle, Sparkles } from "lucide-react";
 import { toast } from "sonner";
@@ -212,20 +213,26 @@ const Chat = () => {
       {/* Header */}
       <header className="border-b bg-card">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
+          <button 
+            onClick={() => navigate("/")}
+            className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer"
+          >
             <Cookie className="w-8 h-8 text-primary" />
             <h1 className="text-2xl font-bold">Fitify</h1>
-          </div>
-          <div className="flex items-center gap-4">
+          </button>
+          <div className="flex items-center gap-2">
             <ThemeToggle />
-            <Button variant="ghost" size="icon" onClick={() => navigate("/")}>
-              <TrendingUp className="w-5 h-5" />
+            <Button variant="ghost" onClick={() => navigate("/")} className="flex items-center gap-2">
+              <TrendingUp className="w-4 h-4" />
+              <span className="hidden sm:inline">Dashboard</span>
             </Button>
-            <Button variant="ghost" size="icon" onClick={() => navigate("/profile")}>
-              <User className="w-5 h-5" />
+            <Button variant="ghost" onClick={() => navigate("/profile")} className="flex items-center gap-2">
+              <User className="w-4 h-4" />
+              <span className="hidden sm:inline">Profile</span>
             </Button>
-            <Button variant="ghost" size="icon" onClick={handleSignOut}>
-              <LogOut className="w-5 h-5" />
+            <Button variant="ghost" onClick={handleSignOut} className="flex items-center gap-2">
+              <LogOut className="w-4 h-4" />
+              <span className="hidden sm:inline">Sign Out</span>
             </Button>
           </div>
         </div>
