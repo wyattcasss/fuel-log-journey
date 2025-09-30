@@ -11,7 +11,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
-import { Coffee, Sun, Moon, Cookie, User, TrendingUp, LogOut, Apple } from "lucide-react";
+import { Coffee, Sun, Moon, Cookie, User, TrendingUp, LogOut, Apple, MessageCircle } from "lucide-react";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -152,6 +153,10 @@ const Dashboard = () => {
             <h1 className="text-2xl font-bold">Fitify</h1>
           </div>
           <div className="flex items-center gap-4">
+            <ThemeToggle />
+            <Button variant="ghost" size="icon" onClick={() => navigate("/chat")}>
+              <MessageCircle className="w-5 h-5" />
+            </Button>
             <Button variant="ghost" size="icon" onClick={() => navigate("/progress")}>
               <TrendingUp className="w-5 h-5" />
             </Button>

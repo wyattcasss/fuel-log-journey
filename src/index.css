@@ -27,8 +27,9 @@ All colors MUST be HSL.
     --muted: 210 40% 96.1%;
     --muted-foreground: 215 16% 47%;
 
-    --accent: 266 100% 65%;
+    --accent: 168 76% 42%;
     --accent-foreground: 0 0% 100%;
+    --accent-hover: 168 76% 38%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
@@ -45,7 +46,7 @@ All colors MUST be HSL.
 
     --chart-1: 168 76% 42%;
     --chart-2: 28 92% 58%;
-    --chart-3: 266 100% 65%;
+    --chart-3: 168 76% 52%;
     --chart-4: 197 71% 53%;
     --chart-5: 339 90% 51%;
 
@@ -80,11 +81,12 @@ All colors MUST be HSL.
     --secondary: 28 92% 58%;
     --secondary-foreground: 222 47% 11%;
 
-    --muted: 217 33% 17%;
+    --muted: 217 33% 25%;
     --muted-foreground: 215 20% 65%;
 
-    --accent: 266 100% 70%;
+    --accent: 168 76% 52%;
     --accent-foreground: 222 47% 11%;
+    --accent-hover: 168 76% 58%;
 
     --destructive: 0 63% 31%;
     --destructive-foreground: 210 40% 98%;
@@ -107,12 +109,84 @@ All colors MUST be HSL.
   }
 }
 
+/* Gradual theme ripple effect */
+@keyframes ripple-reveal {
+  0% {
+    mask: radial-gradient(circle at var(--ripple-x, 50%) var(--ripple-y, 50%), transparent 0%, transparent 0%, black 0%);
+    -webkit-mask: radial-gradient(circle at var(--ripple-x, 50%) var(--ripple-y, 50%), transparent 0%, transparent 0%, black 0%);
+  }
+  100% {
+    mask: radial-gradient(circle at var(--ripple-x, 50%) var(--ripple-y, 50%), transparent 0%, transparent 150%, black 150%);
+    -webkit-mask: radial-gradient(circle at var(--ripple-x, 50%) var(--ripple-y, 50%), transparent 0%, transparent 150%, black 150%);
+  }
+}
+
+/* Theme overlay that reveals gradually */
+.theme-ripple-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0;
+}
+
+.theme-ripple-overlay.light {
+  background: hsl(0 0% 100%);
+}
+
+.theme-ripple-overlay.dark {
+  background: hsl(222 47% 11%);
+}
+
+.theme-ripple-overlay.active {
+  opacity: 1;
+  animation: ripple-reveal 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* Enhanced transitions for all elements */
+.theme-transitioning * {
+  transition: background-color 0.6s ease, color 0.6s ease, border-color 0.6s ease, fill 0.6s ease, stroke 0.6s ease !important;
+}
+
+
+
 @layer base {
   * {
     @apply border-border;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
   }
 
   body {
     @apply bg-background text-foreground;
+    transition: background-color 0.6s ease, color 0.6s ease;
+  }
+
+  /* Fix hover colors to match green/teal accent with proper text contrast */
+  .hover\:bg-accent:hover {
+    background-color: hsl(var(--accent-hover));
+    color: hsl(var(--foreground));
+  }
+  
+  [data-state="open"] {
+    background-color: hsl(var(--accent-hover));
+    color: hsl(var(--foreground));
+  }
+  
+  button:hover:not(:disabled):not([data-state="open"]) {
+    background-color: hsl(var(--accent) / 0.1);
+    color: hsl(var(--foreground));
+  }
+  
+  .hover\:text-accent-foreground:hover {
+    color: hsl(var(--foreground));
+  }
+
+  /* Dropdown menu item hover fix */
+  [data-radix-dropdown-menu-item]:hover {
+    background-color: hsl(var(--accent) / 0.1) !important;
+    color: hsl(var(--foreground)) !important;
   }
 }
